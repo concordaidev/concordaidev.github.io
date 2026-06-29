@@ -1,0 +1,1289 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ConcordAI — Yapay Zekâ Yönetişimi ve Değerlendirmesi</title>
+    <meta
+      name="description"
+      content="ConcordAI; finans ve büyük ölçekli kurumların yapay zekâ sistemlerini ISO/IEC 42001 ile uyumlu hale getirmesine ve doğru modeli seçmesine yardımcı olur. Ürünler: Mizan ve Mihenk."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='11' fill='%230E4F4A'/%3E%3Cg transform='translate(24 24) scale(0.86) translate(-24 -24)'%3E%3Cpath d='M36.6 14.15A16 16 0 1 0 36.6 33.85' fill='none' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='24' r='3.4' fill='white'/%3E%3C/g%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap&subset=latin,latin-ext"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --teal: #0e4f4a;
+        --teal-hover: #0b3e3a;
+        --teal-soft: #e6efed;
+        --bg: #f5f5f2; /* soft gray/white canvas */
+        --surface: #ffffff;
+        --ink: #1f2429; /* charcoal main text */
+        --muted: #6b7280;
+        --border: #e6e6e1;
+        --amber: #b07d18;
+        --radius: 16px;
+        --maxw: 1140px;
+        --shadow: 0 1px 2px rgba(20, 23, 26, 0.04),
+          0 12px 32px -12px rgba(20, 23, 26, 0.16);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        font-size: 17px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Space Grotesk", "Inter", sans-serif;
+        color: var(--ink);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      p {
+        margin: 0;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .container {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .eyebrow {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--teal);
+      }
+      .accent {
+        color: var(--teal);
+      }
+
+      /* ---------- buttons ---------- */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 22px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: background 0.18s, color 0.18s, border-color 0.18s,
+          transform 0.18s;
+      }
+      .btn-primary {
+        background: var(--teal);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--teal-hover);
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--ink);
+        border-color: var(--border);
+      }
+      .btn-outline:hover {
+        border-color: var(--teal);
+        color: var(--teal);
+      }
+
+      /* ---------- header ---------- */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: rgba(245, 245, 242, 0.82);
+        backdrop-filter: saturate(160%) blur(10px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 68px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand .mark {
+        width: 30px;
+        height: 30px;
+        color: var(--teal);
+      }
+      .brand .name {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: -0.01em;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+      .nav-links a {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--muted);
+        transition: color 0.15s;
+      }
+      .nav-links a:hover {
+        color: var(--ink);
+      }
+      @media (max-width: 820px) {
+        .nav-links .link {
+          display: none;
+        }
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: clamp(48px, 8vw, 104px) 0 clamp(56px, 8vw, 96px);
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            560px 420px at 78% 18%,
+            rgba(14, 79, 74, 0.1),
+            transparent 70%
+          ),
+          radial-gradient(
+            520px 380px at 8% 92%,
+            rgba(14, 79, 74, 0.06),
+            transparent 70%
+          );
+        pointer-events: none;
+      }
+      .hero-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: clamp(32px, 5vw, 64px);
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(2.4rem, 5.2vw, 4rem);
+        font-weight: 700;
+        margin-top: 18px;
+      }
+      .hero .lead {
+        margin-top: 22px;
+        font-size: clamp(17px, 2vw, 19px);
+        color: #3b4248;
+        max-width: 33em;
+      }
+      .hero-cta {
+        margin-top: 32px;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .trust {
+        margin-top: 34px;
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .trust b {
+        color: var(--ink);
+        font-family: "Space Grotesk", sans-serif;
+      }
+      @media (max-width: 880px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- compliance visual ---------- */
+      .viz {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 22px;
+        animation: floaty 7s ease-in-out infinite;
+      }
+      @keyframes floaty {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .viz {
+          animation: none;
+        }
+      }
+      .viz-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .viz-head .t {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .viz-head .mark {
+        width: 26px;
+        height: 26px;
+        color: var(--teal);
+      }
+      .viz-head .ttl {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .viz-head .sub {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .pill {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--teal-soft);
+        color: var(--teal);
+      }
+      .viz-body {
+        display: grid;
+        grid-template-columns: 132px 1fr;
+        gap: 18px;
+        padding-top: 18px;
+        align-items: center;
+      }
+      .gauge {
+        position: relative;
+        width: 132px;
+        height: 132px;
+      }
+      .gauge .val {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .gauge .num {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 30px;
+        color: var(--teal);
+        line-height: 1;
+      }
+      .gauge .cap {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+      .rows {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 13px;
+      }
+      .row .id {
+        font-family: "Space Grotesk", monospace;
+        font-weight: 600;
+        color: var(--teal);
+        flex: 0 0 52px;
+      }
+      .row .label {
+        color: #3b4248;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .chip {
+        flex: 0 0 auto;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 9px;
+        border-radius: 999px;
+      }
+      .chip.inc {
+        background: var(--teal-soft);
+        color: var(--teal);
+      }
+      .chip.exc {
+        background: #eceae6;
+        color: #6b7280;
+      }
+      .chip.mod {
+        background: rgba(176, 125, 24, 0.12);
+        color: var(--amber);
+      }
+      .viz-foot {
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+      .bars {
+        display: flex;
+        gap: 6px;
+        align-items: flex-end;
+        height: 44px;
+      }
+      .bars span {
+        flex: 1;
+        background: var(--teal-soft);
+        border-radius: 4px 4px 2px 2px;
+        position: relative;
+      }
+      .bars span::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: var(--h);
+        background: var(--teal);
+        border-radius: 4px 4px 2px 2px;
+      }
+      .viz-foot .cap {
+        margin-top: 8px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      /* ---------- looping viz stack (Mizan ↔ Mihenk) ---------- */
+      .viz-stack {
+        display: grid;
+      }
+      .viz-stack > .viz {
+        grid-area: 1 / 1;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.7s ease;
+      }
+      .viz-stack > .viz.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .viz-dots {
+        display: flex;
+        justify-content: center;
+        gap: 7px;
+        margin-top: 16px;
+      }
+      .viz-dots .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--border);
+        cursor: pointer;
+        transition: background 0.2s, width 0.2s;
+      }
+      .viz-dots .dot.active {
+        background: var(--teal);
+        width: 20px;
+      }
+
+      /* ---------- Mihenk: fairness metrics ---------- */
+      .metrics {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding-top: 18px;
+      }
+      .metric .top {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 13px;
+      }
+      .metric .mname {
+        color: #3b4248;
+      }
+      .metric .mright {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 0 0 auto;
+      }
+      .metric .mval {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--ink);
+      }
+      .metric .track {
+        margin-top: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #eceae6;
+        overflow: hidden;
+      }
+      .metric .fill {
+        height: 100%;
+        border-radius: 999px;
+        background: var(--teal);
+      }
+      .metric.warn .fill {
+        background: var(--amber);
+      }
+      .metric.risk .fill {
+        background: #b4502f;
+      }
+      .chip.pass {
+        background: var(--teal-soft);
+        color: var(--teal);
+      }
+      .chip.warn {
+        background: rgba(176, 125, 24, 0.12);
+        color: var(--amber);
+      }
+      .chip.risk {
+        background: rgba(180, 80, 47, 0.12);
+        color: #b4502f;
+      }
+      .models {
+        display: flex;
+        gap: 8px;
+      }
+      .models .m {
+        flex: 1;
+        text-align: center;
+      }
+      .models .mbar {
+        height: 40px;
+        background: #eceae6;
+        border-radius: 6px;
+        position: relative;
+        overflow: hidden;
+      }
+      .models .mbar i {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: var(--h);
+        background: var(--teal-soft);
+      }
+      .models .m.best .mbar i {
+        background: var(--teal);
+      }
+      .models .ml {
+        font-size: 11px;
+        margin-top: 5px;
+        color: var(--muted);
+      }
+      .models .m.best .ml {
+        color: var(--teal);
+        font-weight: 600;
+      }
+
+      /* ---------- sections ---------- */
+      section.block {
+        padding: clamp(56px, 9vw, 104px) 0;
+      }
+      .section-head {
+        max-width: 40em;
+        margin-bottom: 44px;
+      }
+      .section-head h2 {
+        font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+        font-weight: 700;
+        margin-top: 12px;
+      }
+      .section-head p {
+        margin-top: 16px;
+        color: #3b4248;
+        font-size: 18px;
+      }
+
+      .scope-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .scope-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 26px;
+      }
+      .scope-card .ico {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: var(--teal-soft);
+        color: var(--teal);
+        margin-bottom: 16px;
+      }
+      .scope-card h3 {
+        font-size: 19px;
+        font-weight: 600;
+      }
+      .scope-card p {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      @media (max-width: 820px) {
+        .scope-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- products ---------- */
+      #urunler {
+        background: linear-gradient(180deg, #fff, #f7f7f4);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .product {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        gap: 22px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 30px;
+        box-shadow: var(--shadow);
+        transition: transform 0.18s, box-shadow 0.18s;
+      }
+      .product:hover {
+        transform: translateY(-3px);
+      }
+      .product + .product {
+        margin-top: 20px;
+      }
+      .product .badge {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        background: var(--teal);
+        color: #fff;
+        display: grid;
+        place-items: center;
+      }
+      .product .badge svg {
+        width: 30px;
+        height: 30px;
+      }
+      .product .pname {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .product h3 {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .product .tag {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--teal);
+        background: var(--teal-soft);
+        padding: 3px 10px;
+        border-radius: 999px;
+      }
+      .product p {
+        margin-top: 10px;
+        color: #3b4248;
+        max-width: 52em;
+      }
+      .product ul {
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+      }
+      .product li {
+        font-size: 14px;
+        color: var(--ink);
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .product li::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--teal);
+        flex: 0 0 auto;
+      }
+      @media (max-width: 600px) {
+        .product {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- founders ---------- */
+      .founders {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .founder {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px;
+      }
+      .founder.lead {
+        border-color: rgba(14, 79, 74, 0.35);
+        box-shadow: 0 0 0 1px rgba(14, 79, 74, 0.18);
+      }
+      .avatar {
+        position: relative;
+        overflow: hidden;
+        width: 64px;
+        height: 64px;
+        border-radius: 999px;
+        background: var(--teal);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 22px;
+        margin-bottom: 16px;
+      }
+      .avatar img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .founder h3 {
+        font-size: 19px;
+        font-weight: 700;
+      }
+      .founder .role {
+        margin-top: 4px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--teal);
+      }
+      .founder p {
+        margin-top: 12px;
+        font-size: 15px;
+        color: var(--muted);
+      }
+      .founder .focus {
+        margin-top: 14px;
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--teal);
+        background: var(--teal-soft);
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+      @media (max-width: 820px) {
+        .founders {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- cta + footer ---------- */
+      .cta {
+        background: var(--teal);
+        color: #fff;
+        border-radius: 22px;
+        padding: clamp(36px, 6vw, 60px);
+        text-align: center;
+      }
+      .cta h2 {
+        color: #fff;
+        font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+        font-weight: 700;
+      }
+      .cta p {
+        color: rgba(255, 255, 255, 0.82);
+        margin: 14px auto 0;
+        max-width: 40em;
+      }
+      .cta .btn {
+        margin-top: 26px;
+        background: #fff;
+        color: var(--teal);
+      }
+      .cta .btn:hover {
+        background: var(--teal-soft);
+      }
+      footer {
+        padding: 40px 0 56px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      /* reveal on scroll */
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="container nav">
+        <a class="brand" href="#">
+          <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <path
+              d="M36.6 14.15A16 16 0 1 0 36.6 33.85"
+              stroke="currentColor"
+              stroke-width="5"
+              stroke-linecap="round"
+              fill="none"
+            />
+            <circle cx="24" cy="24" r="3.4" fill="currentColor" />
+          </svg>
+          <span class="name">ConcordAI</span>
+        </a>
+        <nav class="nav-links">
+          <a class="link" href="#kapsam">Kapsam</a>
+          <a class="link" href="#urunler">Ürünler</a>
+          <a class="link" href="#kurucular">Kurucular</a>
+          <a class="btn btn-primary" href="#iletisim">Bize ulaşın</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Yapay zekâ yönetişimi ve güvencesi</span>
+          <h1>Yapay zekâya güveni <span class="accent">ölçülebilir</span> kılıyoruz.</h1>
+          <p class="lead">
+            ConcordAI; finans ve büyük ölçekli kurumların yapay zekâ sistemlerini
+            ISO/IEC 42001 ile uyumlu hale getirmesine ve kendi alanları için doğru
+            modeli seçmesine yardımcı olur. Türkçe öncelikli, denetime hazır,
+            risk temelli.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#urunler">Ürünleri keşfedin →</a>
+            <a class="btn btn-outline" href="#iletisim">Demo talep edin</a>
+          </div>
+          <div class="trust">
+            <span><b>ISO/IEC 42001</b> · Uygunluk</span>
+            <span><b>38</b> Ek A kontrolü</span>
+            <span><b>AI Evals</b> · Adillik &amp; yanlılık</span>
+          </div>
+        </div>
+
+        <!-- Looping product visualizations: Mizan ↔ Mihenk -->
+        <div class="reveal">
+          <div class="viz-stack" aria-label="Mizan ve Mihenk örnek görselleştirmeleri">
+            <div class="viz active" data-slide="mizan" aria-label="ISO/IEC 42001 uygunluk analizi örneği">
+          <div class="viz-head">
+            <div class="t">
+              <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <g
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M9 14H39" />
+                  <path d="M24 9V35" />
+                  <path d="M9 14L5 21M9 14L13 21" />
+                  <path d="M4 21Q9 27.5 14 21" />
+                  <path d="M39 14L35 21M39 14L43 21" />
+                  <path d="M34 21Q39 27.5 44 21" />
+                  <path d="M24 35L18 41M24 35L30 41" />
+                  <path d="M16 41H32" />
+                </g>
+                <circle cx="24" cy="8.5" r="2.4" fill="currentColor" />
+              </svg>
+              <div>
+                <div class="ttl">Uygunluk Analizi</div>
+                <div class="sub">ISO/IEC 42001:2023 · SoA</div>
+              </div>
+            </div>
+            <span class="pill">Mizan</span>
+          </div>
+
+          <div class="viz-body">
+            <div class="gauge">
+              <svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
+                <circle cx="66" cy="66" r="52" fill="none" stroke="#e6efed" stroke-width="12" />
+                <circle
+                  cx="66"
+                  cy="66"
+                  r="52"
+                  fill="none"
+                  stroke="#0e4f4a"
+                  stroke-width="12"
+                  stroke-linecap="round"
+                  stroke-dasharray="326.7"
+                  stroke-dashoffset="26.1"
+                  transform="rotate(-90 66 66)"
+                />
+              </svg>
+              <div class="val">
+                <span class="num">%92</span>
+                <span class="cap">Hazırlık</span>
+              </div>
+            </div>
+
+            <div class="rows">
+              <div class="row">
+                <span class="id">A.2.2</span>
+                <span class="label">Yapay zekâ politikası</span>
+                <span class="chip inc">Dahil</span>
+              </div>
+              <div class="row">
+                <span class="id">A.5.4</span>
+                <span class="label">Bireyler üzerindeki etki</span>
+                <span class="chip inc">Dahil</span>
+              </div>
+              <div class="row">
+                <span class="id">A.6.2.4</span>
+                <span class="label">Doğrulama ve geçerleme</span>
+                <span class="chip inc">Dahil</span>
+              </div>
+              <div class="row">
+                <span class="id">A.8.5</span>
+                <span class="label">İlgili taraflar için bilgi</span>
+                <span class="chip mod">Değiştirilmiş</span>
+              </div>
+              <div class="row">
+                <span class="id">A.10.4</span>
+                <span class="label">Müşteriler</span>
+                <span class="chip exc">Hariç</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="viz-foot">
+            <div class="bars">
+              <span style="--h: 80%"></span>
+              <span style="--h: 100%"></span>
+              <span style="--h: 65%"></span>
+              <span style="--h: 90%"></span>
+              <span style="--h: 75%"></span>
+              <span style="--h: 100%"></span>
+              <span style="--h: 85%"></span>
+              <span style="--h: 95%"></span>
+              <span style="--h: 70%"></span>
+            </div>
+            <div class="cap">Hedef bazında ilerleme · 9 kontrol amacı (A.2–A.10)</div>
+          </div>
+            </div>
+
+            <!-- Mihenk: adillik & yanlılık değerlendirmesi -->
+            <div
+              class="viz"
+              data-slide="mihenk"
+              aria-label="Mihenk adillik ve yanlılık değerlendirmesi örneği"
+            >
+              <div class="viz-head">
+                <div class="t">
+                  <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                    <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M24 6 L40 18 L31 40 H17 L8 18 Z" />
+                      <path d="M17 22 L24 28 L33 16" />
+                    </g>
+                    <circle cx="35.5" cy="11" r="1.7" fill="currentColor" />
+                  </svg>
+                  <div>
+                    <div class="ttl">Adillik &amp; Yanlılık Skoru</div>
+                    <div class="sub">Kredi değerlendirme · Türkçe LLM</div>
+                  </div>
+                </div>
+                <span class="pill">Mihenk</span>
+              </div>
+
+              <div class="metrics">
+                <div class="metric pass">
+                  <div class="top">
+                    <span class="mname">Kalıp yargı (stereotip) skoru</span>
+                    <span class="mright"><span class="mval">0,14</span><span class="chip pass">Geçti</span></span>
+                  </div>
+                  <div class="track"><div class="fill" style="width: 16%"></div></div>
+                </div>
+                <div class="metric pass">
+                  <div class="top">
+                    <span class="mname">Toksisite farkı · kadın–erkek</span>
+                    <span class="mright"><span class="mval">%4,2</span><span class="chip pass">Geçti</span></span>
+                  </div>
+                  <div class="track"><div class="fill" style="width: 12%"></div></div>
+                </div>
+                <div class="metric warn">
+                  <div class="top">
+                    <span class="mname">Demografik eşitlik · genç–yaşlı kredi</span>
+                    <span class="mright"><span class="mval">%9,1</span><span class="chip warn">Uyarı</span></span>
+                  </div>
+                  <div class="track"><div class="fill" style="width: 42%"></div></div>
+                </div>
+                <div class="metric risk">
+                  <div class="top">
+                    <span class="mname">Eşitlenmiş olasılıklar · SES, kredi</span>
+                    <span class="mright"><span class="mval">%13,8</span><span class="chip risk">Riskli</span></span>
+                  </div>
+                  <div class="track"><div class="fill" style="width: 66%"></div></div>
+                </div>
+              </div>
+
+              <div class="viz-foot">
+                <div class="cap" style="margin-bottom: 10px">
+                  4 model değerlendirildi · Önerilen: Model B (en yüksek adillik)
+                </div>
+                <div class="models">
+                  <div class="m"><div class="mbar"><i style="--h: 74%"></i></div><div class="ml">A · 74</div></div>
+                  <div class="m best"><div class="mbar"><i style="--h: 88%"></i></div><div class="ml">B · 88 ★</div></div>
+                  <div class="m"><div class="mbar"><i style="--h: 69%"></i></div><div class="ml">C · 69</div></div>
+                  <div class="m"><div class="mbar"><i style="--h: 80%"></i></div><div class="ml">D · 80</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="viz-dots" aria-hidden="true">
+            <span class="dot active"></span><span class="dot"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE -->
+    <section class="block" id="kapsam">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Kapsamımız</span>
+          <h2>Sorumlu yapay zekâyı uygulanabilir kılan araçlar.</h2>
+          <p>
+            ConcordAI, finansal sektör ve büyük kurumlar için yapay zekâ
+            yönetişimi, uyum ve değerlendirme çözümleri geliştirir.
+            Sertifikasyona hazırlıktan model seçimine kadar tüm süreci tek bir
+            güven katmanında birleştiririz.
+          </p>
+        </div>
+        <div class="scope-grid">
+          <div class="scope-card reveal">
+            <div class="ico">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <h3>Uyum &amp; sertifikasyon</h3>
+            <p>
+              ISO/IEC 42001 Uygulanabilirlik Bildirgesi (SoA), risk kaydı ve
+              denetime hazır gerekçelendirme — bölüm bölüm, eksiksiz.
+            </p>
+          </div>
+          <div class="scope-card reveal">
+            <div class="ico">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg>
+            </div>
+            <h3>Değerlendirme &amp; model seçimi</h3>
+            <p>
+              Büyük dil modellerinin adillik ve yanlılık açısından otomatik
+              değerlendirmesiyle, kuruma özgü alana en uygun modeli seçin.
+            </p>
+          </div>
+          <div class="scope-card reveal">
+            <div class="ico">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+            </div>
+            <h3>Türkçe öncelikli</h3>
+            <p>
+              Türkçe arayüz, Türkçe denetim çıktıları ve tam Türkçe karakter
+              desteğiyle yerel düzenleyici beklentilerine uygun.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="block" id="urunler">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Ürünler</span>
+          <h2>İki ürün, tek güven katmanı.</h2>
+          <p>
+            Uyumu kanıtlayın, ardından doğru modeli seçin — ikisi de aynı
+            metodolojiyle.
+          </p>
+        </div>
+
+        <!-- Mizan -->
+        <div class="product reveal">
+          <div class="badge">
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 14H39" /><path d="M24 9V35" />
+                <path d="M9 14L5 21M9 14L13 21" /><path d="M4 21Q9 27.5 14 21" />
+                <path d="M39 14L35 21M39 14L43 21" /><path d="M34 21Q39 27.5 44 21" />
+                <path d="M24 35L18 41M24 35L30 41" /><path d="M16 41H32" />
+              </g>
+              <circle cx="24" cy="8.5" r="2.4" fill="currentColor" />
+            </svg>
+          </div>
+          <div>
+            <div class="pname">
+              <h3>Mizan</h3>
+              <span class="tag">ISO/IEC 42001 Uygunluk</span>
+            </div>
+            <p>
+              Kuruluşunuzu sertifikasyon seviyesinde bir ISO/IEC 42001
+              Uygulanabilirlik Bildirgesi'ne taşır. 38 Ek A kontrolünü bölüm
+              bölüm değerlendirir; yapay zekâ destekli, denetime hazır Türkçe
+              gerekçe taslakları üretir ve riskleri kontrollere bağlar.
+            </p>
+            <ul>
+              <li>38 kontrol · 9 amaç</li>
+              <li>Risk kaydı ve eşleştirme</li>
+              <li>Yapay zekâ gerekçe yardımcısı</li>
+              <li>DOCX &amp; PDF çıktı</li>
+              <li>Dahil / Hariç / Değiştirilmiş</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mihenk -->
+        <div class="product reveal">
+          <div class="badge">
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M24 6 L40 18 L31 40 H17 L8 18 Z" />
+                <path d="M17 22 L24 28 L33 16" />
+              </g>
+              <circle cx="35.5" cy="11" r="1.7" fill="currentColor" />
+            </svg>
+          </div>
+          <div>
+            <div class="pname">
+              <h3>Mihenk</h3>
+              <span class="tag">Yapay Zekâ Değerlendirme (AI Evals)</span>
+            </div>
+            <p>
+              Büyük dil modellerini adillik ve yanlılık açısından otomatik
+              olarak değerlendirir. Kuruma özgü alanınız için modelleri ortak bir
+              mihenk taşında karşılaştırır; hangi LLM'i kullanacağınıza kanıta
+              dayalı karar vermenizi sağlar.
+            </p>
+            <ul>
+              <li>Adillik &amp; yanlılık ölçümü</li>
+              <li>Alana özgü değerlendirme</li>
+              <li>Modeller arası karşılaştırma</li>
+              <li>Kanıta dayalı model seçimi</li>
+              <li>Tekrarlanabilir skorlar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDERS -->
+    <section class="block" id="kurucular">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Kurucular</span>
+          <h2>Ekibimiz.</h2>
+          <p>
+            Akademik derinliği ürün disipliniyle birleştiren bir kurucu ekibi.
+          </p>
+        </div>
+        <div class="founders">
+          <div class="founder lead reveal">
+            <div class="avatar">
+              <img src="img/caglar.jpg" alt="Prof. Dr. Çağlar Yıldırım" onerror="this.remove()" />
+              <span>ÇY</span>
+            </div>
+            <h3>Prof. Dr. Çağlar Yıldırım</h3>
+            <div class="role">Kurucu Ortak</div>
+            <p>
+              Yapay zekâ değerlendirme (AI evals) alanında uzman. Northeastern
+              Üniversitesi ve MIT başta olmak üzere önde gelen ABD
+              üniversitelerinde yürüttüğü araştırmalarla, büyük dil modellerinin
+              adillik, yanlılık ve güvenilirlik açısından ölçülmesi üzerine
+              çalışır; ConcordAI'nin değerlendirme metodolojisinin mimarıdır.
+            </p>
+            <span class="focus">AI Evals · Adillik &amp; Yanlılık</span>
+          </div>
+          <div class="founder reveal">
+            <div class="avatar">
+              <img src="img/eyup.jpg" alt="Eyüp Engin Küçük" onerror="this.remove()" />
+              <span>EK</span>
+            </div>
+            <h3>Eyüp Engin Küçük</h3>
+            <div class="role">Kurucu Ortak</div>
+            <p>
+              İstanbul Şehir Üniversitesi Felsefe Bölümü mezunu; Boğaziçi
+              Üniversitesi'nde Felsefe yüksek lisansını tamamladı. Northeastern
+              Üniversitesi'nde araştırma görevlisi, MIT Center for Advanced
+              Virtuality'de araştırmacı ve Harvard Üniversitesi'nde öğretim
+              görevlisi olarak görev yaptı. Görsel algı, biliş ve bilişsel bilim
+              felsefesindeki derin uzmanlığıyla ConcordAI'de yapay zekâ etiği
+              çalışmalarına liderlik eder.
+            </p>
+            <span class="focus">Felsefe · Yapay Zekâ Etiği</span>
+          </div>
+          <div class="founder reveal">
+            <div class="avatar">
+              <img src="img/salih.jpg" alt="Ahmet Salih Gündoğdu" onerror="this.remove()" />
+              <span>AG</span>
+            </div>
+            <h3>Ahmet Salih Gündoğdu</h3>
+            <div class="role">Kurucu Ortak</div>
+            <p>
+              Veri bilimi ve büyük dil modelleri alanındaki uzmanlığını iş
+              geliştirme ve operasyonla birleştirir. Müşteri ilişkileri, uyum
+              ortaklıkları ve büyüme stratejisini yürütürken modellerin teknik
+              değerlendirme süreçlerine katkı sağlar.
+            </p>
+            <span class="focus">Veri Bilimi · LLM</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="block" id="iletisim">
+      <div class="container">
+        <div class="cta reveal">
+          <h2>Yapay zekânıza güveni kanıtlayın.</h2>
+          <p>
+            Mizan ve Mihenk'i kurumunuzda görmek için bir demo planlayalım.
+          </p>
+          <a class="btn" href="mailto:info@concordai.dev">info@concordai.dev</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container foot">
+        <div class="brand">
+          <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M36.6 14.15A16 16 0 1 0 36.6 33.85" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none" />
+            <circle cx="24" cy="24" r="3.4" fill="currentColor" />
+          </svg>
+          <span class="name" style="font-size: 17px">ConcordAI</span>
+        </div>
+        <span>© 2026 ConcordAI · Türkiye · Yapay zekâ yönetişimi ve değerlendirmesi</span>
+      </div>
+    </footer>
+
+    <script>
+      // Subtle reveal-on-scroll
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      // Loop the hero visualizations: Mizan ↔ Mihenk
+      const stack = document.querySelector(".viz-stack");
+      if (stack) {
+        const slides = [...stack.querySelectorAll(".viz")];
+        const dots = [...document.querySelectorAll(".viz-dots .dot")];
+        let idx = 0;
+        let timer = null;
+        const reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        const show = (n) => {
+          idx = (n + slides.length) % slides.length;
+          slides.forEach((s, k) => s.classList.toggle("active", k === idx));
+          dots.forEach((d, k) => d.classList.toggle("active", k === idx));
+        };
+        const stop = () => {
+          if (timer) {
+            clearInterval(timer);
+            timer = null;
+          }
+        };
+        const start = () => {
+          stop();
+          if (!reduce) timer = setInterval(() => show(idx + 1), 5200);
+        };
+        dots.forEach((d, k) =>
+          d.addEventListener("click", () => {
+            show(k);
+            start();
+          }),
+        );
+        stack.addEventListener("mouseenter", stop);
+        stack.addEventListener("mouseleave", start);
+        show(0);
+        start();
+      }
+    </script>
+  </body>
+</html>
