@@ -161,6 +161,12 @@
       .nav-links a:hover {
         color: var(--ink);
       }
+      /* keep the teal CTA button readable (white text) — the rule above is more
+         specific than .btn-primary, so re-assert it here */
+      .nav-links .btn-primary,
+      .nav-links .btn-primary:hover {
+        color: #fff;
+      }
       @media (max-width: 820px) {
         .nav-links .link {
           display: none;
@@ -682,10 +688,6 @@
         border-radius: var(--radius);
         padding: 28px;
       }
-      .founder.lead {
-        border-color: rgba(14, 79, 74, 0.35);
-        box-shadow: 0 0 0 1px rgba(14, 79, 74, 0.18);
-      }
       .avatar {
         position: relative;
         overflow: hidden;
@@ -1153,7 +1155,7 @@
           </p>
         </div>
         <div class="founders">
-          <div class="founder lead reveal">
+          <div class="founder reveal">
             <div class="avatar">
               <img src="img/caglar.jpg" alt="Prof. Dr. Çağlar Yıldırım" onerror="this.remove()" />
               <span>ÇY</span>
@@ -1177,13 +1179,13 @@
             <h3>Eyüp Engin Küçük</h3>
             <div class="role">Kurucu Ortak</div>
             <p>
-              İstanbul Şehir Üniversitesi Felsefe Bölümü mezunu; Boğaziçi
-              Üniversitesi'nde Felsefe yüksek lisansını tamamladı. Northeastern
-              Üniversitesi'nde araştırma görevlisi, MIT Center for Advanced
-              Virtuality'de araştırmacı ve Harvard Üniversitesi'nde öğretim
-              görevlisi olarak görev yaptı. Görsel algı, biliş ve bilişsel bilim
-              felsefesindeki derin uzmanlığıyla ConcordAI'de yapay zekâ etiği
-              çalışmalarına liderlik eder.
+              Felsefe alanında İstanbul Şehir Üniversitesi'nden mezun oldu ve
+              Boğaziçi Üniversitesi'nde yüksek lisansını tamamladı; MIT ve
+              Harvard gibi önde gelen kurumlarda araştırma ve öğretim asistanlığı
+              deneyimi edindi. Felsefe ve bilişsel bilim alanındaki güçlü
+              birikimiyle ConcordAI'de yapay zekâ etiği çalışmalarına liderlik
+              eder; ürünlerimizin sorumlu, adil ve insan-merkezli tasarımına yön
+              verir.
             </p>
             <span class="focus">Felsefe · Yapay Zekâ Etiği</span>
           </div>
