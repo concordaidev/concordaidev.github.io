@@ -1,23 +1,17 @@
 <!doctype html>
 <html lang="tr">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ConcordAI — Yapay Zekâ Yönetişimi ve Değerlendirmesi</title>
-    <meta
-      name="description"
-      content="ConcordAI; finans ve büyük ölçekli kurumların yapay zekâ sistemlerini ISO/IEC 42001 ile uyumlu hale getirmesine ve doğru modeli seçmesine yardımcı olur. Ürünler: Mizan ve Mihenk."
-    />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='11' fill='%230E4F4A'/%3E%3Cg transform='translate(24 24) scale(0.86) translate(-24 -24)'%3E%3Cpath d='M36.6 14.15A16 16 0 1 0 36.6 33.85' fill='none' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='24' r='3.4' fill='white'/%3E%3C/g%3E%3C/svg%3E"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap&subset=latin,latin-ext"
-      rel="stylesheet"
-    />
+    <meta name="description" content="ConcordAI; finans ve büyük ölçekli kurumların yapay zekâ sistemlerini ISO/IEC 42001 ile uyumlu hale getirmesine ve doğru modeli seçmesine yardımcı olur. Ürünler: Mizan, Mihenk ve Kâtip.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2048%2048'%3E%3Crect%20width='48'%20height='48'%20rx='11'%20fill='%230E4F4A'/%3E%3Cg%20transform='translate(24%2024)%20scale(0.86)%20translate(-24%20-24)'%3E%3Cpath%20d='M36.6%2014.15A16%2016%200%201%200%2036.6%2033.85'%20fill='none'%20stroke='white'%20stroke-width='5'%20stroke-linecap='round'/%3E%3Ccircle%20cx='24'%20cy='24'%20r='3.4'%20fill='white'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="alternate" hreflang="tr" href="https://www.concordai.dev/?lang=tr">
+    <link rel="alternate" hreflang="en" href="https://www.concordai.dev/?lang=en">
+    <link rel="alternate" hreflang="x-default" href="https://www.concordai.dev/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap&amp;subset=latin,latin-ext" rel="stylesheet">
     <style>
       :root {
         --teal: #0e4f4a;
@@ -170,6 +164,11 @@
       @media (max-width: 820px) {
         .nav-links .link {
           display: none;
+        }
+        /* The language switch is not a nav link — on a phone it is the only way
+           to reach the other language, so it survives the breakpoint. */
+        .nav-links .lang-toggle {
+          display: inline-block;
         }
       }
 
@@ -790,6 +789,27 @@
         opacity: 1;
         transform: none;
       }
+
+      .lang-toggle {
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 4px 12px;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        letter-spacing: 0.02em;
+      }
+      .lang-toggle:hover {
+        color: var(--teal);
+        border-color: var(--teal);
+      }
+      .lang-toggle:focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 2px;
+      }
     </style>
   </head>
   <body>
@@ -797,23 +817,25 @@
     <header>
       <div class="container nav">
         <a class="brand" href="#">
-          <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <path
-              d="M36.6 14.15A16 16 0 1 0 36.6 33.85"
-              stroke="currentColor"
-              stroke-width="5"
-              stroke-linecap="round"
-              fill="none"
-            />
-            <circle cx="24" cy="24" r="3.4" fill="currentColor" />
+          <svg class="mark" viewbox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M36.6 14.15A16 16 0 1 0 36.6 33.85" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"></path>
+            <circle cx="24" cy="24" r="3.4" fill="currentColor"></circle>
           </svg>
           <span class="name">ConcordAI</span>
         </a>
         <nav class="nav-links">
-          <a class="link" href="#kapsam">Kapsam</a>
-          <a class="link" href="#urunler">Ürünler</a>
-          <a class="link" href="#kurucular">Kurucular</a>
-          <a class="btn btn-primary" href="#iletisim">Bize ulaşın</a>
+          <a class="link" href="#kapsam" data-en="What we do">Kapsam</a>
+          <a class="link" href="#urunler" data-en="Products">Ürünler</a>
+          <a class="link" href="#kurucular" data-en="Founders">Kurucular</a>
+          <a class="btn btn-primary" href="#iletisim" data-en="Contact us">Bize ulaşın</a>
+          <button
+            id="langToggle"
+            class="link lang-toggle"
+            type="button"
+            aria-label="Switch to English"
+          >
+            EN
+          </button>
         </nav>
       </div>
     </header>
@@ -822,22 +844,22 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow">Yapay zekâ yönetişimi ve güvencesi</span>
-          <h1>Yapay zekâya güveni <span class="accent">ölçülebilir</span> kılıyoruz.</h1>
-          <p class="lead">
+          <span class="eyebrow" data-en="AI governance and assurance">Yapay zekâ yönetişimi ve güvencesi</span>
+          <h1 data-en-html='We make trust in AI &lt;span class="accent"&gt;measurable&lt;/span&gt;.'>Yapay zekâya güveni <span class="accent">ölçülebilir</span> kılıyoruz.</h1>
+          <p class="lead" data-en="ConcordAI helps financial institutions and large organisations bring their AI systems in line with ISO/IEC 42001 and choose the right model for their own domain. Turkish-first, audit-ready, risk-based.">
             ConcordAI; finans ve büyük ölçekli kurumların yapay zekâ sistemlerini
             ISO/IEC 42001 ile uyumlu hale getirmesine ve kendi alanları için doğru
             modeli seçmesine yardımcı olur. Türkçe öncelikli, denetime hazır,
             risk temelli.
           </p>
           <div class="hero-cta">
-            <a class="btn btn-primary" href="#urunler">Ürünleri keşfedin →</a>
-            <a class="btn btn-outline" href="#iletisim">Demo talep edin</a>
+            <a class="btn btn-primary" href="#urunler" data-en="Explore the products →">Ürünleri keşfedin →</a>
+            <a class="btn btn-outline" href="#iletisim" data-en="Request a demo">Demo talep edin</a>
           </div>
           <div class="trust">
-            <span><b>ISO/IEC 42001</b> · Uygunluk</span>
-            <span><b>38</b> Ek A kontrolü</span>
-            <span><b>AI Evals</b> · Adillik &amp; yanlılık</span>
+            <span data-en-html="&lt;b&gt;ISO/IEC 42001&lt;/b&gt; · Compliance"><b>ISO/IEC 42001</b> · Uygunluk</span>
+            <span data-en-html="&lt;b&gt;38&lt;/b&gt; Annex A controls"><b>38</b> Ek A kontrolü</span>
+            <span data-en-html="&lt;b&gt;AI Evals&lt;/b&gt; · Fairness &amp;amp; bias"><b>AI Evals</b> · Adillik &amp; yanlılık</span>
           </div>
         </div>
 
@@ -847,27 +869,22 @@
             <div class="viz active" data-slide="mizan" aria-label="ISO/IEC 42001 uygunluk analizi örneği">
           <div class="viz-head">
             <div class="t">
-              <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                <g
-                  stroke="currentColor"
-                  stroke-width="2.6"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M9 14H39" />
-                  <path d="M24 9V35" />
-                  <path d="M9 14L5 21M9 14L13 21" />
-                  <path d="M4 21Q9 27.5 14 21" />
-                  <path d="M39 14L35 21M39 14L43 21" />
-                  <path d="M34 21Q39 27.5 44 21" />
-                  <path d="M24 35L18 41M24 35L30 41" />
-                  <path d="M16 41H32" />
+              <svg class="mark" viewbox="0 0 48 48" fill="none" aria-hidden="true">
+                <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 14H39"></path>
+                  <path d="M24 9V35"></path>
+                  <path d="M9 14L5 21M9 14L13 21"></path>
+                  <path d="M4 21Q9 27.5 14 21"></path>
+                  <path d="M39 14L35 21M39 14L43 21"></path>
+                  <path d="M34 21Q39 27.5 44 21"></path>
+                  <path d="M24 35L18 41M24 35L30 41"></path>
+                  <path d="M16 41H32"></path>
                 </g>
-                <circle cx="24" cy="8.5" r="2.4" fill="currentColor" />
+                <circle cx="24" cy="8.5" r="2.4" fill="currentColor"></circle>
               </svg>
               <div>
-                <div class="ttl">Uygunluk Analizi</div>
-                <div class="sub">ISO/IEC 42001:2023 · SoA</div>
+                <div class="ttl" data-en="Compliance analysis">Uygunluk Analizi</div>
+                <div class="sub" data-en="ISO/IEC 42001:2023 · SoA">ISO/IEC 42001:2023 · SoA</div>
               </div>
             </div>
             <span class="pill">Mizan</span>
@@ -875,52 +892,41 @@
 
           <div class="viz-body">
             <div class="gauge">
-              <svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
-                <circle cx="66" cy="66" r="52" fill="none" stroke="#e6efed" stroke-width="12" />
-                <circle
-                  cx="66"
-                  cy="66"
-                  r="52"
-                  fill="none"
-                  stroke="#0e4f4a"
-                  stroke-width="12"
-                  stroke-linecap="round"
-                  stroke-dasharray="326.7"
-                  stroke-dashoffset="26.1"
-                  transform="rotate(-90 66 66)"
-                />
+              <svg width="132" height="132" viewbox="0 0 132 132" aria-hidden="true">
+                <circle cx="66" cy="66" r="52" fill="none" stroke="#e6efed" stroke-width="12"></circle>
+                <circle cx="66" cy="66" r="52" fill="none" stroke="#0e4f4a" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="26.1" transform="rotate(-90 66 66)"></circle>
               </svg>
               <div class="val">
                 <span class="num">%92</span>
-                <span class="cap">Hazırlık</span>
+                <span class="cap" data-en="Readiness">Hazırlık</span>
               </div>
             </div>
 
             <div class="rows">
               <div class="row">
                 <span class="id">A.2.2</span>
-                <span class="label">Yapay zekâ politikası</span>
-                <span class="chip inc">Dahil</span>
+                <span class="label" data-en="AI policy">Yapay zekâ politikası</span>
+                <span class="chip inc" data-en="Included">Dahil</span>
               </div>
               <div class="row">
                 <span class="id">A.5.4</span>
-                <span class="label">Bireyler üzerindeki etki</span>
-                <span class="chip inc">Dahil</span>
+                <span class="label" data-en="Impact on individuals">Bireyler üzerindeki etki</span>
+                <span class="chip inc" data-en="Included">Dahil</span>
               </div>
               <div class="row">
                 <span class="id">A.6.2.4</span>
-                <span class="label">Doğrulama ve geçerleme</span>
-                <span class="chip inc">Dahil</span>
+                <span class="label" data-en="Verification and validation">Doğrulama ve geçerleme</span>
+                <span class="chip inc" data-en="Included">Dahil</span>
               </div>
               <div class="row">
                 <span class="id">A.8.5</span>
-                <span class="label">İlgili taraflar için bilgi</span>
-                <span class="chip mod">Değiştirilmiş</span>
+                <span class="label" data-en="Information for interested parties">İlgili taraflar için bilgi</span>
+                <span class="chip mod" data-en="Modified">Değiştirilmiş</span>
               </div>
               <div class="row">
                 <span class="id">A.10.4</span>
-                <span class="label">Müşteriler</span>
-                <span class="chip exc">Hariç</span>
+                <span class="label" data-en="Customers">Müşteriler</span>
+                <span class="chip exc" data-en="Excluded">Hariç</span>
               </div>
             </div>
           </div>
@@ -937,28 +943,24 @@
               <span style="--h: 95%"></span>
               <span style="--h: 70%"></span>
             </div>
-            <div class="cap">Hedef bazında ilerleme · 9 kontrol amacı (A.2–A.10)</div>
+            <div class="cap" data-en="Progress by objective · 9 control objectives (A.2–A.10)">Hedef bazında ilerleme · 9 kontrol amacı (A.2–A.10)</div>
           </div>
             </div>
 
             <!-- Mihenk: adillik & yanlılık değerlendirmesi -->
-            <div
-              class="viz"
-              data-slide="mihenk"
-              aria-label="Mihenk adillik ve yanlılık değerlendirmesi örneği"
-            >
+            <div class="viz" data-slide="mihenk" aria-label="Mihenk adillik ve yanlılık değerlendirmesi örneği">
               <div class="viz-head">
                 <div class="t">
-                  <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <svg class="mark" viewbox="0 0 48 48" fill="none" aria-hidden="true">
                     <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M24 6 L40 18 L31 40 H17 L8 18 Z" />
-                      <path d="M17 22 L24 28 L33 16" />
+                      <path d="M24 6 L40 18 L31 40 H17 L8 18 Z"></path>
+                      <path d="M17 22 L24 28 L33 16"></path>
                     </g>
-                    <circle cx="35.5" cy="11" r="1.7" fill="currentColor" />
+                    <circle cx="35.5" cy="11" r="1.7" fill="currentColor"></circle>
                   </svg>
                   <div>
-                    <div class="ttl">Adillik &amp; Yanlılık Skoru</div>
-                    <div class="sub">Kredi değerlendirme · Türkçe LLM</div>
+                    <div class="ttl" data-en="Fairness &amp; bias score">Adillik &amp; Yanlılık Skoru</div>
+                    <div class="sub" data-en="Credit assessment · Turkish LLM">Kredi değerlendirme · Türkçe LLM</div>
                   </div>
                 </div>
                 <span class="pill">Mihenk</span>
@@ -967,36 +969,36 @@
               <div class="metrics">
                 <div class="metric pass">
                   <div class="top">
-                    <span class="mname">Kalıp yargı (stereotip) skoru</span>
-                    <span class="mright"><span class="mval">0,14</span><span class="chip pass">Geçti</span></span>
+                    <span class="mname" data-en="Stereotype score">Kalıp yargı (stereotip) skoru</span>
+                    <span class="mright"><span class="mval">0,14</span><span class="chip pass" data-en="Pass">Geçti</span></span>
                   </div>
                   <div class="track"><div class="fill" style="width: 16%"></div></div>
                 </div>
                 <div class="metric pass">
                   <div class="top">
-                    <span class="mname">Toksisite farkı · kadın–erkek</span>
-                    <span class="mright"><span class="mval">%4,2</span><span class="chip pass">Geçti</span></span>
+                    <span class="mname" data-en="Toxicity gap · women–men">Toksisite farkı · kadın–erkek</span>
+                    <span class="mright"><span class="mval">%4,2</span><span class="chip pass" data-en="Pass">Geçti</span></span>
                   </div>
                   <div class="track"><div class="fill" style="width: 12%"></div></div>
                 </div>
                 <div class="metric warn">
                   <div class="top">
-                    <span class="mname">Demografik eşitlik · genç–yaşlı kredi</span>
-                    <span class="mright"><span class="mval">%9,1</span><span class="chip warn">Uyarı</span></span>
+                    <span class="mname" data-en="Demographic parity · younger–older credit">Demografik eşitlik · genç–yaşlı kredi</span>
+                    <span class="mright"><span class="mval">%9,1</span><span class="chip warn" data-en="Warning">Uyarı</span></span>
                   </div>
                   <div class="track"><div class="fill" style="width: 42%"></div></div>
                 </div>
                 <div class="metric risk">
                   <div class="top">
-                    <span class="mname">Eşitlenmiş olasılıklar · SES, kredi</span>
-                    <span class="mright"><span class="mval">%13,8</span><span class="chip risk">Riskli</span></span>
+                    <span class="mname" data-en="Equalised odds · SES, credit">Eşitlenmiş olasılıklar · SES, kredi</span>
+                    <span class="mright"><span class="mval">%13,8</span><span class="chip risk" data-en="At risk">Riskli</span></span>
                   </div>
                   <div class="track"><div class="fill" style="width: 66%"></div></div>
                 </div>
               </div>
 
               <div class="viz-foot">
-                <div class="cap" style="margin-bottom: 10px">
+                <div class="cap" style="margin-bottom: 10px" data-en="4 models evaluated · Recommended: Model B (highest fairness)">
                   4 model değerlendirildi · Önerilen: Model B (en yüksek adillik)
                 </div>
                 <div class="models">
@@ -1020,9 +1022,9 @@
     <section class="block" id="kapsam">
       <div class="container">
         <div class="section-head reveal">
-          <span class="eyebrow">Kapsamımız</span>
-          <h2>Sorumlu yapay zekâyı uygulanabilir kılan araçlar.</h2>
-          <p>
+          <span class="eyebrow" data-en="What we do">Kapsamımız</span>
+          <h2 data-en="Tools that make responsible AI practical.">Sorumlu yapay zekâyı uygulanabilir kılan araçlar.</h2>
+          <p data-en="ConcordAI builds AI governance, compliance and evaluation tools for financial institutions and large organisations — bringing everything from certification readiness to model selection into a single layer of trust.">
             ConcordAI, finansal sektör ve büyük kurumlar için yapay zekâ
             yönetişimi, uyum ve değerlendirme çözümleri geliştirir.
             Sertifikasyona hazırlıktan model seçimine kadar tüm süreci tek bir
@@ -1032,30 +1034,30 @@
         <div class="scope-grid">
           <div class="scope-card reveal">
             <div class="ico">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
             </div>
-            <h3>Uyum &amp; sertifikasyon</h3>
-            <p>
+            <h3 data-en="Compliance &amp; certification">Uyum &amp; sertifikasyon</h3>
+            <p data-en="An ISO/IEC 42001 Statement of Applicability, a risk register and audit-ready justifications — control by control, complete.">
               ISO/IEC 42001 Uygulanabilirlik Bildirgesi (SoA), risk kaydı ve
               denetime hazır gerekçelendirme — bölüm bölüm, eksiksiz.
             </p>
           </div>
           <div class="scope-card reveal">
             <div class="ico">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg>
+              <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><rect x="7" y="12" width="3" height="6"></rect><rect x="12" y="8" width="3" height="10"></rect><rect x="17" y="5" width="3" height="13"></rect></svg>
             </div>
-            <h3>Değerlendirme &amp; model seçimi</h3>
-            <p>
+            <h3 data-en="Evaluation &amp; model selection">Değerlendirme &amp; model seçimi</h3>
+            <p data-en="Automatic fairness and bias evaluation of large language models, so you can choose the one that fits your domain.">
               Büyük dil modellerinin adillik ve yanlılık açısından otomatik
               değerlendirmesiyle, kuruma özgü alana en uygun modeli seçin.
             </p>
           </div>
           <div class="scope-card reveal">
             <div class="ico">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+              <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"></path></svg>
             </div>
-            <h3>Türkçe öncelikli</h3>
-            <p>
+            <h3 data-en="Turkish-first">Türkçe öncelikli</h3>
+            <p data-en="A Turkish interface, Turkish audit output and full Turkish character support — built for local regulatory expectations.">
               Türkçe arayüz, Türkçe denetim çıktıları ve tam Türkçe karakter
               desteğiyle yerel düzenleyici beklentilerine uygun.
             </p>
@@ -1068,10 +1070,10 @@
     <section class="block" id="urunler">
       <div class="container">
         <div class="section-head reveal">
-          <span class="eyebrow">Ürünler</span>
-          <h2>İki ürün, tek güven katmanı.</h2>
-          <p>
-            Uyumu kanıtlayın, ardından doğru modeli seçin — ikisi de aynı
+          <span class="eyebrow" data-en="Products">Ürünler</span>
+          <h2 data-en="Three products, one layer of trust.">Üç ürün, tek güven katmanı.</h2>
+          <p data-en="Prove compliance, choose the right model, then use it safely — all three on one methodology.">
+            Uyumu kanıtlayın, doğru modeli seçin, güvenle kullanın — üçü de aynı
             metodolojiyle.
           </p>
         </div>
@@ -1079,33 +1081,33 @@
         <!-- Mizan -->
         <div class="product reveal">
           <div class="badge">
-            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <svg viewbox="0 0 48 48" fill="none" aria-hidden="true">
               <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 14H39" /><path d="M24 9V35" />
-                <path d="M9 14L5 21M9 14L13 21" /><path d="M4 21Q9 27.5 14 21" />
-                <path d="M39 14L35 21M39 14L43 21" /><path d="M34 21Q39 27.5 44 21" />
-                <path d="M24 35L18 41M24 35L30 41" /><path d="M16 41H32" />
+                <path d="M9 14H39"></path><path d="M24 9V35"></path>
+                <path d="M9 14L5 21M9 14L13 21"></path><path d="M4 21Q9 27.5 14 21"></path>
+                <path d="M39 14L35 21M39 14L43 21"></path><path d="M34 21Q39 27.5 44 21"></path>
+                <path d="M24 35L18 41M24 35L30 41"></path><path d="M16 41H32"></path>
               </g>
-              <circle cx="24" cy="8.5" r="2.4" fill="currentColor" />
+              <circle cx="24" cy="8.5" r="2.4" fill="currentColor"></circle>
             </svg>
           </div>
           <div>
             <div class="pname">
               <h3>Mizan</h3>
-              <span class="tag">ISO/IEC 42001 Uygunluk</span>
+              <span class="tag" data-en="ISO/IEC 42001 Compliance">ISO/IEC 42001 Uygunluk</span>
             </div>
-            <p>
+            <p data-en="Takes your organisation to a certification-grade ISO/IEC 42001 Statement of Applicability. It works through all 38 Annex A controls, drafts audit-ready justifications with AI assistance, and ties risks to the controls that address them.">
               Kuruluşunuzu sertifikasyon seviyesinde bir ISO/IEC 42001
               Uygulanabilirlik Bildirgesi'ne taşır. 38 Ek A kontrolünü bölüm
               bölüm değerlendirir; yapay zekâ destekli, denetime hazır Türkçe
               gerekçe taslakları üretir ve riskleri kontrollere bağlar.
             </p>
             <ul>
-              <li>38 kontrol · 9 amaç</li>
-              <li>Risk kaydı ve eşleştirme</li>
-              <li>Yapay zekâ gerekçe yardımcısı</li>
-              <li>DOCX &amp; PDF çıktı</li>
-              <li>Dahil / Hariç / Değiştirilmiş</li>
+              <li data-en="38 controls · 9 objectives">38 kontrol · 9 amaç</li>
+              <li data-en="Risk register and mapping">Risk kaydı ve eşleştirme</li>
+              <li data-en="AI-assisted justification drafts">Yapay zekâ gerekçe yardımcısı</li>
+              <li data-en="DOCX &amp; PDF output">DOCX &amp; PDF çıktı</li>
+              <li data-en="Included / Excluded / Modified">Dahil / Hariç / Değiştirilmiş</li>
             </ul>
           </div>
         </div>
@@ -1113,31 +1115,64 @@
         <!-- Mihenk -->
         <div class="product reveal">
           <div class="badge">
-            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <svg viewbox="0 0 48 48" fill="none" aria-hidden="true">
               <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M24 6 L40 18 L31 40 H17 L8 18 Z" />
-                <path d="M17 22 L24 28 L33 16" />
+                <path d="M24 6 L40 18 L31 40 H17 L8 18 Z"></path>
+                <path d="M17 22 L24 28 L33 16"></path>
               </g>
-              <circle cx="35.5" cy="11" r="1.7" fill="currentColor" />
+              <circle cx="35.5" cy="11" r="1.7" fill="currentColor"></circle>
             </svg>
           </div>
           <div>
             <div class="pname">
               <h3>Mihenk</h3>
-              <span class="tag">Yapay Zekâ Değerlendirme (AI Evals)</span>
+              <span class="tag" data-en="AI Evaluation (AI Evals)">Yapay Zekâ Değerlendirme (AI Evals)</span>
             </div>
-            <p>
+            <p data-en="Evaluates large language models for fairness and bias automatically. It compares models against a common touchstone in your own domain, so the choice of which LLM to use rests on evidence rather than impression.">
               Büyük dil modellerini adillik ve yanlılık açısından otomatik
               olarak değerlendirir. Kuruma özgü alanınız için modelleri ortak bir
               mihenk taşında karşılaştırır; hangi LLM'i kullanacağınıza kanıta
               dayalı karar vermenizi sağlar.
             </p>
             <ul>
-              <li>Adillik &amp; yanlılık ölçümü</li>
-              <li>Alana özgü değerlendirme</li>
-              <li>Modeller arası karşılaştırma</li>
-              <li>Kanıta dayalı model seçimi</li>
-              <li>Tekrarlanabilir skorlar</li>
+              <li data-en="Fairness &amp; bias measurement">Adillik &amp; yanlılık ölçümü</li>
+              <li data-en="Domain-specific evaluation">Alana özgü değerlendirme</li>
+              <li data-en="Model-to-model comparison">Modeller arası karşılaştırma</li>
+              <li data-en="Evidence-based model selection">Kanıta dayalı model seçimi</li>
+              <li data-en="Repeatable scores">Tekrarlanabilir skorlar</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Kâtip -->
+        <div class="product reveal">
+          <div class="badge">
+            <svg viewbox="0 0 48 48" fill="none" aria-hidden="true">
+              <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 12h28a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H20l-8 6v-6h-2a2 2 0 0 1-2-2V14a2 2 0 0 1 2-2Z"></path>
+                <path d="M17 21h14"></path><path d="M17 27h9"></path>
+              </g>
+              <circle cx="35" cy="24" r="1.8" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <div>
+            <div class="pname">
+              <h3>Kâtip</h3>
+              <span class="tag" data-en="Turkish-First AI Assistant">Türkçe Öncelikli Yapay Zekâ Asistanı</span>
+            </div>
+            <p data-en="A corporate AI assistant built for Turkish institutions. Responses are provided by a finetuned model, screened by a server-side guardrail, and cite the documents they came from, every one of which is recorded. It runs in your own cloud, or entirely on the employee’s computer.">
+              Türk kurumları için yapılandırılmış kurumsal yapay zekâ asistanı.
+              Yanıtlar; incel ayarlı bir modelden verilir, sunucu
+              tarafındaki güvenlik filtresinden geçer ve dayandığı belgeleri
+              kaynak göstererek verilir. Hepsi kayıt altına alınır. Kendi
+              bulutumuzda ya da tamamen çalışanın bilgisayarında çalışır.
+            </p>
+            <ul>
+              <li data-en="Turkish-first interface and answers">Türkçe arayüz ve Türkçe yanıtlar</li>
+              <li data-en="Reviewed system prompt &amp; server-side guardrail">İnce ayarlı model, sistem talimatı ve güvenlik filtresi</li>
+              <li data-en="Answers that cite your own documents">Kendi belgelerinizi kaynak gösteren yanıtlar</li>
+              <li data-en="Desktop version: the model runs on the machine">Masaüstü sürüm: model bilgisayarda çalışır</li>
+              <li data-en="Nothing leaves the device in local mode">Yerel modda hiçbir veri cihazdan çıkmaz</li>
             </ul>
           </div>
         </div>
@@ -1148,37 +1183,37 @@
     <section class="block" id="kurucular">
       <div class="container">
         <div class="section-head reveal">
-          <span class="eyebrow">Kurucular</span>
-          <h2>Ekibimiz.</h2>
-          <p>
+          <span class="eyebrow" data-en="Founders">Kurucular</span>
+          <h2 data-en="Our team.">Ekibimiz.</h2>
+          <p data-en="A founding team that pairs academic depth with product discipline.">
             Akademik derinliği ürün disipliniyle birleştiren bir kurucu ekibi.
           </p>
         </div>
         <div class="founders">
           <div class="founder reveal">
             <div class="avatar">
-              <img src="img/caglar.jpg" alt="Prof. Dr. Çağlar Yıldırım" onerror="this.remove()" />
+              <img src="img/caglar.jpg" alt="Prof. Dr. Çağlar Yıldırım" onerror="this.remove()">
               <span>ÇY</span>
             </div>
             <h3>Prof. Dr. Çağlar Yıldırım</h3>
-            <div class="role">Kurucu Ortak</div>
-            <p>
+            <div class="role" data-en="Co-founder">Kurucu Ortak</div>
+            <p data-en="Specialist in AI evaluation. Through research at leading US universities including Northeastern and MIT, he works on measuring large language models for fairness, bias and reliability, and is the architect of ConcordAI's evaluation methodology.">
               Yapay zekâ değerlendirme (AI evals) alanında uzman. Northeastern
               Üniversitesi ve MIT başta olmak üzere önde gelen ABD
               üniversitelerinde yürüttüğü araştırmalarla, büyük dil modellerinin
               adillik, yanlılık ve güvenilirlik açısından ölçülmesi üzerine
               çalışır; ConcordAI'nin değerlendirme metodolojisinin mimarıdır.
             </p>
-            <span class="focus">AI Evals · Adillik &amp; Yanlılık</span>
+            <span class="focus" data-en="AI Evals · Fairness &amp; Bias">AI Evals · Adillik &amp; Yanlılık</span>
           </div>
           <div class="founder reveal">
             <div class="avatar">
-              <img src="img/eyup.jpg" alt="Eyüp Engin Küçük" onerror="this.remove()" />
+              <img src="img/eyup.jpg" alt="Eyüp Engin Küçük" onerror="this.remove()">
               <span>EK</span>
             </div>
             <h3>Eyüp Engin Küçük</h3>
-            <div class="role">Kurucu Ortak</div>
-            <p>
+            <div class="role" data-en="Co-founder">Kurucu Ortak</div>
+            <p data-en="He read philosophy at İstanbul Şehir University and took his master's at Boğaziçi University, with research and teaching experience at institutions including MIT and Harvard. Drawing on philosophy and cognitive science, he leads ConcordAI's work on AI ethics and shapes the responsible, fair and human-centred design of our products.">
               Felsefe alanında İstanbul Şehir Üniversitesi'nden mezun oldu ve
               Boğaziçi Üniversitesi'nde yüksek lisansını tamamladı; MIT ve
               Harvard gibi önde gelen kurumlarda araştırma ve öğretim asistanlığı
@@ -1187,22 +1222,22 @@
               eder; ürünlerimizin sorumlu, adil ve insan-merkezli tasarımına yön
               verir.
             </p>
-            <span class="focus">Felsefe · Yapay Zekâ Etiği</span>
+            <span class="focus" data-en="Philosophy · AI ethics">Felsefe · Yapay Zekâ Etiği</span>
           </div>
           <div class="founder reveal">
             <div class="avatar">
-              <img src="img/salih.jpg" alt="Ahmet Salih Gündoğdu" onerror="this.remove()" />
+              <img src="img/salih.jpg" alt="Ahmet Salih Gündoğdu" onerror="this.remove()">
               <span>AG</span>
             </div>
             <h3>Ahmet Salih Gündoğdu</h3>
-            <div class="role">Kurucu Ortak</div>
-            <p>
+            <div class="role" data-en="Co-founder">Kurucu Ortak</div>
+            <p data-en="He combines expertise in data science and large language models with business development and operations, leading customer relationships, compliance partnerships and growth strategy while contributing to the technical evaluation of models.">
               Veri bilimi ve büyük dil modelleri alanındaki uzmanlığını iş
               geliştirme ve operasyonla birleştirir. Müşteri ilişkileri, uyum
               ortaklıkları ve büyüme stratejisini yürütürken modellerin teknik
               değerlendirme süreçlerine katkı sağlar.
             </p>
-            <span class="focus">Veri Bilimi · LLM</span>
+            <span class="focus" data-en="Data science · LLMs">Veri Bilimi · LLM</span>
           </div>
         </div>
       </div>
@@ -1212,9 +1247,9 @@
     <section class="block" id="iletisim">
       <div class="container">
         <div class="cta reveal">
-          <h2>Yapay zekânıza güveni kanıtlayın.</h2>
-          <p>
-            Mizan ve Mihenk'i kurumunuzda görmek için bir demo planlayalım.
+          <h2 data-en="Prove that your AI can be trusted.">Yapay zekânıza güveni kanıtlayın.</h2>
+          <p data-en="Let us arrange a demo of Mizan, Mihenk and Kâtip at your organisation.">
+            Mizan, Mihenk ve Kâtip'i kurumunuzda görmek için bir demo planlayalım.
           </p>
           <a class="btn" href="mailto:info@concordai.dev">info@concordai.dev</a>
         </div>
@@ -1225,13 +1260,13 @@
     <footer>
       <div class="container foot">
         <div class="brand">
-          <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <path d="M36.6 14.15A16 16 0 1 0 36.6 33.85" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none" />
-            <circle cx="24" cy="24" r="3.4" fill="currentColor" />
+          <svg class="mark" viewbox="0 0 48 48" fill="none" aria-hidden="true">
+            <path d="M36.6 14.15A16 16 0 1 0 36.6 33.85" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"></path>
+            <circle cx="24" cy="24" r="3.4" fill="currentColor"></circle>
           </svg>
           <span class="name" style="font-size: 17px">ConcordAI</span>
         </div>
-        <span>© 2026 ConcordAI · Türkiye · Yapay zekâ yönetişimi ve değerlendirmesi</span>
+        <span data-en="© 2026 ConcordAI · Türkiye · AI governance and evaluation">© 2026 ConcordAI · Türkiye · Yapay zekâ yönetişimi ve değerlendirmesi</span>
       </div>
     </footer>
 
@@ -1286,6 +1321,75 @@
         show(0);
         start();
       }
+    </script>
+    <script>
+      /* Bilingual in one file. Every translatable element carries data-en (text)
+         or data-en-html (markup); the Turkish original is captured on first
+         switch, so the markup stays the source of truth for Turkish. */
+      (function () {
+        var META = {
+          tr: {
+            title: "ConcordAI — Yapay Zekâ Yönetişimi ve Değerlendirmesi",
+            desc: document.querySelector('meta[name=description]').content,
+            toggle: "EN",
+            label: "Switch to English",
+          },
+          en: {
+            title: "ConcordAI — AI Governance and Evaluation",
+            desc: "ConcordAI helps financial institutions and large organisations bring their AI systems in line with ISO/IEC 42001, choose the right model, and use it safely. Products: Mizan, Mihenk and Kâtip.",
+            toggle: "TR",
+            label: "Türkçeye geç",
+          },
+        };
+
+        var toggle = document.getElementById("langToggle");
+        var metaDesc = document.querySelector('meta[name=description]');
+
+        function apply(lang) {
+          var en = lang === "en";
+          document.querySelectorAll("[data-en]").forEach(function (el) {
+            if (!el.dataset.tr) el.dataset.tr = el.textContent;
+            el.textContent = en ? el.dataset.en : el.dataset.tr;
+          });
+          document.querySelectorAll("[data-en-html]").forEach(function (el) {
+            if (!el.dataset.trHtml) el.dataset.trHtml = el.innerHTML;
+            el.innerHTML = en ? el.dataset.enHtml : el.dataset.trHtml;
+          });
+          document.documentElement.lang = lang;
+          document.title = META[lang].title;
+          metaDesc.content = META[lang].desc;
+          toggle.textContent = META[lang].toggle;
+          toggle.setAttribute("aria-label", META[lang].label);
+        }
+
+        /* Order: an explicit ?lang= wins, then a previous choice, then the
+           browser's own preference. Turkish otherwise — this is a Turkish
+           company and the Turkish page is the canonical one. */
+        var param = new URLSearchParams(location.search).get("lang");
+        var stored = null;
+        try {
+          stored = localStorage.getItem("concordai-lang");
+        } catch (e) {}
+        var initial =
+          param === "en" || param === "tr"
+            ? param
+            : stored ||
+              (navigator.language && navigator.language.slice(0, 2) === "tr"
+                ? "tr"
+                : "en");
+        apply(initial);
+
+        toggle.addEventListener("click", function () {
+          var next = document.documentElement.lang === "en" ? "tr" : "en";
+          apply(next);
+          try {
+            localStorage.setItem("concordai-lang", next);
+          } catch (e) {}
+          var url = new URL(location.href);
+          url.searchParams.set("lang", next);
+          history.replaceState(null, "", url);
+        });
+      })();
     </script>
   </body>
 </html>
